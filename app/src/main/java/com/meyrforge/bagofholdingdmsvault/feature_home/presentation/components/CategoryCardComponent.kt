@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.meyrforge.bagofholdingdmsvault.R
+import com.meyrforge.bagofholdingdmsvault.feature_home.presentation.Category
 import com.meyrforge.bagofholdingdmsvault.ui.theme.Corner
 import com.meyrforge.bagofholdingdmsvault.ui.theme.DarkBrown
 import com.meyrforge.bagofholdingdmsvault.ui.theme.DeepDarkBrown
@@ -159,13 +160,6 @@ fun CategoryGrid(
         }
     }
 }
-
-// Modelo de datos simple
-data class Category(
-    val name: String,
-    val count: Int,
-    val imageRes: Int
-)
 
 @Preview(showBackground = true, backgroundColor = 0xFF362723)
 @Composable
