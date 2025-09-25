@@ -2,6 +2,7 @@ package com.meyrforge.bagofholdingdmsvault.di
 
 import android.content.Context
 import androidx.room.Room
+import com.google.firebase.storage.FirebaseStorage
 import com.meyrforge.bagofholdingdmsvault.common.data.BagOfHoldingDatabase
 import dagger.Module
 import dagger.Provides
@@ -22,4 +23,10 @@ object AppModule {
         Room.databaseBuilder(context, BagOfHoldingDatabase::class.java, DATABASE_NAME)
             .fallbackToDestructiveMigration(false)
             .build()
+
+    @Provides
+    @Singleton
+    fun provideFirebaseStorage(): FirebaseStorage {
+        return FirebaseStorage.getInstance()
+    }
 }

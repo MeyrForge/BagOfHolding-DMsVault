@@ -1,6 +1,7 @@
-package com.meyrforge.bagofholdingdmsvault.common // Or your preferred package
+package com.meyrforge.bagofholdingdmsvault.feature_create_item.data
 
 import androidx.room.TypeConverter
+import com.meyrforge.bagofholdingdmsvault.common.Category
 
 class Converters {
     @TypeConverter

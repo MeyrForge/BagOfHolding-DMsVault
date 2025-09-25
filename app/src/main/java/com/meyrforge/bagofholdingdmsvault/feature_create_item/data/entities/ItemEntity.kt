@@ -1,4 +1,4 @@
-package com.meyrforge.bagofholdingdmsvault.common.data.entities
+package com.meyrforge.bagofholdingdmsvault.feature_create_item.data.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
