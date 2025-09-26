@@ -1,6 +1,8 @@
 package com.meyrforge.bagofholdingdmsvault.common
 
 sealed class Screen(val route: String){
+    data object Login: Screen("login_screen")
+    data object Register: Screen("register_screen")
     data object Home: Screen("home_screen")
     data object Minis: Screen("minis_screen")
     data object Dices: Screen("dices_screen")

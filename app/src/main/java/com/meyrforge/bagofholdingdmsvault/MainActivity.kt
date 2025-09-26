@@ -32,6 +32,7 @@ import androidx.navigation.compose.rememberNavController
 import com.meyrforge.bagofholdingdmsvault.common.Screen
 import com.meyrforge.bagofholdingdmsvault.feature_create_item.presentation.CreateItemScreen
 import com.meyrforge.bagofholdingdmsvault.feature_home.presentation.HomeScreen
+import com.meyrforge.bagofholdingdmsvault.feature_login.presentation.LoginScreen
 import com.meyrforge.bagofholdingdmsvault.ui.theme.BagOfHoldingDMsVaultTheme
 import com.meyrforge.bagofholdingdmsvault.ui.theme.Copper
 import com.meyrforge.bagofholdingdmsvault.ui.theme.DarkBrown
@@ -56,8 +57,11 @@ class MainActivity : ComponentActivity() {
                     ) {
                         NavHost(
                             navController = navController,
-                            startDestination = Screen.Home.route
+                            startDestination = Screen.Login.route
                         ) {
+                            composable(route = Screen.Login.route) {
+                                LoginScreen(navController = navController)
+                            }
                             composable(route = Screen.Home.route) {
                                 HomeScreen()
                             }

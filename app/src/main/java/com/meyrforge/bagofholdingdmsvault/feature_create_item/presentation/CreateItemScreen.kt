@@ -33,8 +33,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -56,10 +54,9 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.meyrforge.bagofholdingdmsvault.R
 import com.meyrforge.bagofholdingdmsvault.common.Category
+import com.meyrforge.bagofholdingdmsvault.ui.sharedComponents.InputTextFieldComponent
 import com.meyrforge.bagofholdingdmsvault.ui.theme.Copper
 import com.meyrforge.bagofholdingdmsvault.ui.theme.DarkBrown
-import com.meyrforge.bagofholdingdmsvault.ui.theme.DarkWood
-import com.meyrforge.bagofholdingdmsvault.ui.theme.DeepDarkBrown
 import com.meyrforge.bagofholdingdmsvault.ui.theme.Gold
 import com.meyrforge.bagofholdingdmsvault.ui.theme.GreyishBrown
 
@@ -186,40 +183,6 @@ fun CreateItemScreen(viewModel: CreateItemViewModel = hiltViewModel()) {
         }
     }
 }
-
-@Composable
-fun InputTextFieldComponent(
-    label: String,
-    isDesc: Boolean,
-    text: String,
-    onTextChange: (String) -> Unit
-) {
-    TextField(
-        value = text,
-        onValueChange = { onTextChange(it) },
-        label = { Text(label, fontFamily = FontFamily(Font(R.font.caudex_regular))) },
-        shape = RoundedCornerShape(5.dp),
-        modifier =
-            if (isDesc) Modifier
-                .fillMaxWidth()
-                .padding(10.dp)
-                .border(4.dp, GreyishBrown, RoundedCornerShape(5.dp))
-                .height(100.dp) else
-                Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
-                    .border(4.dp, GreyishBrown, RoundedCornerShape(5.dp)),
-        colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = Copper,
-            unfocusedLabelColor = DarkBrown,
-            focusedContainerColor = DarkWood,
-            focusedLabelColor = DeepDarkBrown,
-            unfocusedIndicatorColor = GreyishBrown,
-            focusedIndicatorColor = GreyishBrown
-        )
-    )
-}
-
 
 @Composable
 fun UploadImageItemComponent(onImageClick: () -> Unit) {
