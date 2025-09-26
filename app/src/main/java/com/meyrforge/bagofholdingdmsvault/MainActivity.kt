@@ -35,8 +35,11 @@ import com.meyrforge.bagofholdingdmsvault.feature_home.presentation.HomeScreen
 import com.meyrforge.bagofholdingdmsvault.ui.theme.BagOfHoldingDMsVaultTheme
 import com.meyrforge.bagofholdingdmsvault.ui.theme.Copper
 import com.meyrforge.bagofholdingdmsvault.ui.theme.DarkBrown
+import com.meyrforge.bagofholdingdmsvault.ui.theme.DeepDarkBrown
 import com.meyrforge.bagofholdingdmsvault.ui.theme.Parchment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +49,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
+                    containerColor = DeepDarkBrown,
                     floatingActionButton = {FABAddItem(navController)}) { innerPadding ->
                     Box(
                         modifier = Modifier.padding(innerPadding)

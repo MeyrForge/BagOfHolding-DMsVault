@@ -17,7 +17,7 @@ class Converters {
             // Handle cases where the string in the DB might not match an enum constant
             // This could happen if you manually changed data or if there's old data.
             // Default to OTHER or throw an error, depending on your app's needs.
-            Category.OTHER
+            Category.OTRO
         }
     }
 }

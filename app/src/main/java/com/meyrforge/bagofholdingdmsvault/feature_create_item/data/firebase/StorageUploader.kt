@@ -4,6 +4,7 @@ import android.net.Uri
 import android.util.Log
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.meyrforge.bagofholdingdmsvault.common.Category
 import kotlinx.coroutines.tasks.await
 import java.util.UUID
 import javax.inject.Inject
@@ -16,9 +17,9 @@ class StorageUploader @Inject constructor(
         firebaseStorage.reference.child("item_images")
     }
 
-    suspend fun uploadImageToFirebase(imageUri: Uri, itemId: String? = null): String? {
+    suspend fun uploadImageToFirebase(imageUri: Uri, itemId: String? = null, category: Category): String? {
         val fileName = itemId?.let { "${it}_${UUID.randomUUID()}.jpg" } ?: "${UUID.randomUUID()}.jpg"
-        val imageFileRef = baseStorageRef.child(fileName)
+        val imageFileRef = baseStorageRef.child("${category.name.lowercase()}/${fileName}")
 
         return try {
             Log.d("StorageUploader", "Iniciando subida para: ${imageUri.path} como $fileName")
