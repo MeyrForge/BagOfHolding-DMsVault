@@ -65,11 +65,14 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltVi
                 }
 
                 LoginEvent.LoginSuccess -> {
-                    // Navegar a la pantalla principal después de un inicio de sesión exitoso
                     navController.navigate(Screen.Home.route) {
                         popUpTo(Screen.Login.route) { inclusive = true }
                         launchSingleTop = true
                     }
+                }
+
+                LoginEvent.RegistrationSuccessAndVerificationSent -> {
+                    navController.navigate(Screen.SentEmail.route)
                 }
             }
         }
@@ -79,7 +82,7 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltVi
         modifier = Modifier
             .fillMaxSize()
             .background(DeepDarkBrown),
-        contentAlignment = Alignment.Center // Para centrar el CircularProgressIndicator
+        contentAlignment = Alignment.Center
     ) {
         LazyColumn(
             modifier = Modifier
@@ -116,13 +119,18 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltVi
                 }
             }
             item {
-                ButtonItemComponent("Iniciar sesión") { navController.navigate(route = Screen.Home.route) }
+                if (isLoading) {
+                    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center)
+                    { CircularProgressIndicator(color = Gold) }
+                } else {
+                    ButtonItemComponent("Iniciar sesión") { viewModel.loginUser() }
+                }
             }
             item {
                 TextButton(
-                    onClick = {},
+                    onClick = { navController.navigate(Screen.Register.route) },
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = !isLoading // Deshabilitar botón mientras carga
+                    enabled = !isLoading
                 ) {
                     Text(
                         "No tengo cuenta, quiero registrarme",
@@ -130,13 +138,6 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = hiltVi
                         color = Gold,
                         fontSize = 16.sp
                     )
-                }
-            }
-            // Podrías añadir un item para el logo de "Cargando" si isLoading es true
-            if (isLoading) {
-                item {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    CircularProgressIndicator(color = Gold)
                 }
             }
         }
