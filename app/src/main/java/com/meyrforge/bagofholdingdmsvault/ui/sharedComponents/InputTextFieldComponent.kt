@@ -41,7 +41,7 @@ fun InputTextFieldComponent(
     isDesc: Boolean = false,
     text: String,
     type: KeyboardType = KeyboardType.Text,
-    onTextChange: (String) -> Unit
+    onTextChange: (String) -> Unit,
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
 

@@ -55,13 +55,13 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     containerColor = DeepDarkBrown,
-                    floatingActionButton = {
-                        val currentRoute =
-                            navController.currentBackStackEntryAsState().value?.destination?.route
-                        if (currentRoute == Screen.Home.route && auth.currentUser != null && auth.currentUser!!.isEmailVerified) {
-                            FABAddItem(navController)
-                        }
-                    }) { innerPadding ->
+//                    floatingActionButton = {
+//                        val currentRoute =
+//                            navController.currentBackStackEntryAsState().value?.destination?.route
+//                        if (currentRoute == Screen.Home.route && auth.currentUser != null && auth.currentUser!!.isEmailVerified) {
+//                            FABAddItem(navController)
+//                        } }
+                     ) { innerPadding ->
                     Box(
                         modifier = Modifier.padding(innerPadding)
                     ) {
@@ -79,7 +79,7 @@ class MainActivity : ComponentActivity() {
                                 SentEmailScreen(navController = navController)
                             }
                             composable(route = Screen.Home.route) {
-                                HomeScreen()
+                                HomeScreen(navController = navController)
                             }
                             composable(route = Screen.AddItem.route) {
                                 CreateItemScreen()

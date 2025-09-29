@@ -37,6 +37,7 @@ import com.meyrforge.bagofholdingdmsvault.R
 import com.meyrforge.bagofholdingdmsvault.common.Screen
 import com.meyrforge.bagofholdingdmsvault.ui.sharedComponents.ButtonItemComponent
 import com.meyrforge.bagofholdingdmsvault.ui.sharedComponents.InputTextFieldComponent
+import com.meyrforge.bagofholdingdmsvault.ui.sharedComponents.TopBarComponent
 import com.meyrforge.bagofholdingdmsvault.ui.theme.Copper
 import com.meyrforge.bagofholdingdmsvault.ui.theme.Corner
 import com.meyrforge.bagofholdingdmsvault.ui.theme.DarkBrown
@@ -143,76 +144,3 @@ fun RegisterScreen(viewModel: LoginViewModel = hiltViewModel(), navController: N
     }
 }
 
-@Preview
-@Composable
-fun TopBarComponent() {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(40.dp)
-            .height(130.dp)
-            .background(Copper)
-    ) {
-        Text(
-            "Registro",
-            fontFamily = FontFamily(Font(R.font.caudex_regular)),
-            fontSize = 50.sp,
-            color = DarkBrown,
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Bold
-        )
-        Image(
-            painter = painterResource(R.drawable.textura), // Reemplaza con tu recurso de textura
-            contentDescription = "texture", // Descripción para accesibilidad
-            modifier = Modifier.fillMaxSize(), // La textura ocupa todo el espacio del Box
-            contentScale = ContentScale.FillBounds // O ContentScale.FillBounds, según el efecto deseado
-        )
-        Image(
-            painter = painterResource(id = R.drawable.corner),
-            contentDescription = "Esquinero superior izquierdo",
-            colorFilter = ColorFilter.tint(Corner.copy(alpha = 0.9f)),
-            modifier = Modifier
-                .align(Alignment.TopStart) // Alinea en la esquina superior izquierda
-                .size(50.dp)
-                .offset((-3).dp, (-3).dp)
-                .graphicsLayer {
-                    rotationZ = 90f // o 270f
-                }// Ajusta el tamaño según sea necesario
-
-        )
-        Image(
-            painter = painterResource(id = R.drawable.corner),
-            contentDescription = "Esquinero superior derecho",
-            colorFilter = ColorFilter.tint(Corner.copy(alpha = 0.9f)),
-            modifier = Modifier
-                .align(Alignment.TopEnd) // Alinea en la esquina superior derecha
-                .size(50.dp)
-                .offset(3.dp, (-3).dp)
-                .graphicsLayer {
-                    rotationZ = 180f
-                }
-        )
-        Image(
-            painter = painterResource(id = R.drawable.corner),
-            contentDescription = "Esquinero inferior izquierdo",
-            colorFilter = ColorFilter.tint(Corner.copy(alpha = 0.9f)),
-            modifier = Modifier
-                .align(Alignment.BottomStart) // Alinea en la esquina inferior izquierda
-                .size(50.dp)
-                .offset((-3).dp, 3.dp)
-        )
-        Image(
-            painter = painterResource(id = R.drawable.corner),
-            contentDescription = "Esquinero inferior derecho",
-            colorFilter = ColorFilter.tint(Corner.copy(alpha = 0.9f)),
-            modifier = Modifier
-                .align(Alignment.BottomEnd) // Alinea en la esquina inferior derecha
-                .size(50.dp)
-                .offset(3.dp, 3.dp)
-                .graphicsLayer {
-                    rotationZ = -90f
-                }
-        )
-    }
-}
