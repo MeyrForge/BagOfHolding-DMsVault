@@ -31,7 +31,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -42,7 +41,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -58,6 +56,7 @@ import com.meyrforge.bagofholdingdmsvault.R
 import com.meyrforge.bagofholdingdmsvault.common.Category
 import com.meyrforge.bagofholdingdmsvault.ui.sharedComponents.InputTextFieldComponent
 import com.meyrforge.bagofholdingdmsvault.ui.sharedComponents.TopBarComponent
+import com.meyrforge.bagofholdingdmsvault.ui.theme.BurgundyRed
 import com.meyrforge.bagofholdingdmsvault.ui.theme.Copper
 import com.meyrforge.bagofholdingdmsvault.ui.theme.Corner
 import com.meyrforge.bagofholdingdmsvault.ui.theme.DarkBrown
@@ -76,6 +75,8 @@ fun CreateItemScreen(viewModel: CreateItemViewModel = hiltViewModel()) {
     val isUploading by viewModel.isUploading
     val uploadedImageUrl by viewModel.uploadedImageUrl
     val uploadError by viewModel.uploadError
+    val message by viewModel.message
+    val isSaving by viewModel.isSaving
 
     val pickMediaLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
@@ -184,7 +185,14 @@ fun CreateItemScreen(viewModel: CreateItemViewModel = hiltViewModel()) {
                             CircularProgressIndicator(modifier = Modifier.size(24.dp))
                             Spacer(Modifier.width(8.dp))
                             Text(
-                                "Guardando...",
+                                "Guardando imágen...",
+                                fontFamily = FontFamily(Font(R.font.caudex_regular))
+                            )
+                        } else if (isSaving) {
+                            CircularProgressIndicator(modifier = Modifier.size(24.dp))
+                            Spacer(Modifier.width(8.dp))
+                            Text(
+                                "Guardando ítem...",
                                 fontFamily = FontFamily(Font(R.font.caudex_regular))
                             )
                         } else {
@@ -197,7 +205,7 @@ fun CreateItemScreen(viewModel: CreateItemViewModel = hiltViewModel()) {
 
             item {
                 uploadError?.let { error ->
-                    Text(error, color = MaterialTheme.colorScheme.error)
+                    Text(error, color = BurgundyRed)
                 }
             }
 
@@ -209,6 +217,11 @@ fun CreateItemScreen(viewModel: CreateItemViewModel = hiltViewModel()) {
             }
         }
     }
+
+        if (message.isNotBlank()) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            viewModel.clearMessage()
+        }
 }
 
 @Composable

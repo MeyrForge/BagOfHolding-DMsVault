@@ -17,8 +17,8 @@ class StorageUploader @Inject constructor(
         firebaseStorage.reference.child("item_images")
     }
 
-    suspend fun uploadImageToFirebase(imageUri: Uri, itemId: String? = null, category: Category): String? {
-        val fileName = itemId?.let { "${it}_${UUID.randomUUID()}.jpg" } ?: "${UUID.randomUUID()}.jpg"
+    suspend fun uploadImageToFirebase(imageUri: Uri, userId: String? = null, category: Category): String? {
+        val fileName = userId?.let { "${it}_${UUID.randomUUID()}.jpg" } ?: "${UUID.randomUUID()}.jpg"
         val imageFileRef = baseStorageRef.child("${category.name.lowercase()}/${fileName}")
 
         return try {
