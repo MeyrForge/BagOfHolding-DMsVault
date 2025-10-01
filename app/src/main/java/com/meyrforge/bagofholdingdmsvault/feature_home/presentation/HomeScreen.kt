@@ -1,6 +1,7 @@
 package com.meyrforge.bagofholdingdmsvault.feature_home.presentation
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.forEach
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -26,12 +28,14 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.meyrforge.bagofholdingdmsvault.R
+import com.meyrforge.bagofholdingdmsvault.common.Category
 import com.meyrforge.bagofholdingdmsvault.common.Screen
 import com.meyrforge.bagofholdingdmsvault.feature_home.presentation.components.CategoryCard
 import com.meyrforge.bagofholdingdmsvault.ui.sharedComponents.ButtonItemComponent
 import kotlinx.coroutines.flow.collectLatest
 
-data class Category(
+data class CategoryHome(
+    val category: Category,
     val name: String,
     val count: Int,
     val imageRes: Int
@@ -42,14 +46,25 @@ fun HomeScreen(
     navController: NavController,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val categories = listOf(
-        Category("Minis", 67, R.drawable.ic_minis),
-        Category("Dados", 24, R.drawable.ic_dices),
-        Category("Mapas", 10, R.drawable.ic_maps),
-        Category("Libros", 15, R.drawable.ic_books),
-        Category("Props", 8, R.drawable.ic_props),
-        Category("Otros", 3, R.drawable.ic_other)
-    )
+    val categories = mutableListOf<CategoryHome>()
+
+    val groupedItems by viewModel.groupedItems
+
+    groupedItems.forEach { (category, itemsInCategory) ->
+        val categoryImage = getIconByCategory(category)
+        val categoryName = getNameByCategory(category)
+        val newCategoryHome = CategoryHome(category, categoryName,itemsInCategory.size, categoryImage)
+        categories.add(newCategoryHome)
+    }
+
+    for(category in Category.entries){
+        if(!groupedItems.containsKey(category)){
+            val categoryImage = getIconByCategory(category)
+            val categoryName = getNameByCategory(category)
+            val newCategoryHome = CategoryHome(category, categoryName, 0, categoryImage)
+            categories.add(newCategoryHome)
+        }
+    }
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
@@ -111,5 +126,26 @@ fun HomeScreen(
             ButtonItemComponent("Agregar objeto") { navController.navigate(Screen.AddItem.route) }
         }
 
+    }
+}
+fun getIconByCategory(category: Category): Int {
+    return when (category) {
+        Category.MINI -> R.drawable.ic_minis
+        Category.DADO -> R.drawable.ic_dices
+        Category.MAPA -> R.drawable.ic_maps
+        Category.LIBRO -> R.drawable.ic_books
+        Category.PROP -> R.drawable.ic_props
+        Category.OTRO -> R.drawable.ic_other
+    }
+}
+
+fun getNameByCategory(category: Category): String {
+    return when (category) {
+        Category.MINI -> "Minis"
+        Category.DADO -> "Dados"
+        Category.MAPA -> "Mapas"
+        Category.LIBRO -> "Libros"
+        Category.PROP -> "Props"
+        Category.OTRO -> "Otros"
     }
 }

@@ -6,14 +6,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -28,11 +24,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.meyrforge.bagofholdingdmsvault.R
-import com.meyrforge.bagofholdingdmsvault.feature_home.presentation.Category
 import com.meyrforge.bagofholdingdmsvault.ui.theme.Corner
 import com.meyrforge.bagofholdingdmsvault.ui.theme.DarkBrown
 import com.meyrforge.bagofholdingdmsvault.ui.theme.DeepDarkBrown
@@ -87,7 +81,7 @@ fun CategoryCard(
                     color = DarkBrown // marrón oscuro
                 )
                 Text(
-                    text = "$itemCount items",
+                    text =  if (itemCount==1) "$itemCount item" else "$itemCount items" ,
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.lato_regular)),
                     color = GreyishBrown
@@ -139,38 +133,3 @@ fun CategoryCard(
     }
 }
 
-@Composable
-fun CategoryGrid(
-    categories: List<Category>,
-    onCategoryClick: (Category) -> Unit
-) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        items(categories) { category ->
-            CategoryCard(
-                title = category.name,
-                itemCount = category.count,
-                imageRes = category.imageRes,
-                onClick = { onCategoryClick(category) }
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFF362723)
-@Composable
-fun CategoryGridPreview() {
-    val categories = listOf(
-        Category("Minis", 67, R.drawable.ic_minis),
-        Category("Dados", 24, R.drawable.ic_dices),
-        Category("Mapas", 10, R.drawable.ic_maps),
-        Category("Libros", 15, R.drawable.ic_books),
-        Category("Props", 8, R.drawable.ic_props),
-        Category("Otros", 3, R.drawable.ic_other)
-    )
-    CategoryGrid(categories) { /* Handle click */ }
-}
