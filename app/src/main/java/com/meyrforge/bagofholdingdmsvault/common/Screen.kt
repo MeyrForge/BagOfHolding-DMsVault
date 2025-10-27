@@ -12,4 +12,5 @@ sealed class Screen(val route: String){
     data object Props: Screen("props_screen")
     data object Other: Screen("other_screen")
     data object AddItem: Screen("add_item")
+    data object Settings: Screen("settings")
 }

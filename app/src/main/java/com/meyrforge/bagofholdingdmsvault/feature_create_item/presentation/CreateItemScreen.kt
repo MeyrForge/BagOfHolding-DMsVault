@@ -167,41 +167,42 @@ fun CreateItemScreen(viewModel: CreateItemViewModel = hiltViewModel()) {
                 }
 
             }
+
             item {
-                if (currentSelectedImageUri != null) {
-                    Button(
-                        onClick = { viewModel.uploadItemImage() },
-                        enabled = !isUploading,
-                        shape = RoundedCornerShape(5.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 16.dp, horizontal = 16.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Corner,
-                            contentColor = Gold
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                    if (isUploading) {
+                        CircularProgressIndicator(modifier = Modifier.size(24.dp), color = Gold)
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            "Guardando imágen...",
+                            fontFamily = FontFamily(Font(R.font.caudex_regular))
                         )
-                    ) {
-                        if (isUploading) {
-                            CircularProgressIndicator(modifier = Modifier.size(24.dp))
-                            Spacer(Modifier.width(8.dp))
-                            Text(
-                                "Guardando imágen...",
-                                fontFamily = FontFamily(Font(R.font.caudex_regular))
-                            )
-                        } else if (isSaving) {
-                            CircularProgressIndicator(modifier = Modifier.size(24.dp))
-                            Spacer(Modifier.width(8.dp))
-                            Text(
-                                "Guardando ítem...",
-                                fontFamily = FontFamily(Font(R.font.caudex_regular))
-                            )
-                        } else {
-                            Text("Crear Ítem", fontFamily = FontFamily(Font(R.font.caudex_regular)))
-                        }
+                    } else if (isSaving) {
+                        CircularProgressIndicator(modifier = Modifier.size(24.dp), color = Gold)
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            "Guardando ítem...",
+                            fontFamily = FontFamily(Font(R.font.caudex_regular))
+                        )
                     }
                 }
             }
-
+            item {
+                Button(
+                    onClick = { viewModel.uploadItemImage() },
+                    enabled = (itemName != "" && itemDescription != "" && currentSelectedImageUri != null),
+                    shape = RoundedCornerShape(5.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp, horizontal = 16.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Corner,
+                        contentColor = Gold
+                    )
+                ) {
+                    Text("Crear Ítem", fontFamily = FontFamily(Font(R.font.caudex_regular)))
+                }
+            }
 
             item {
                 uploadError?.let { error ->
@@ -215,13 +216,14 @@ fun CreateItemScreen(viewModel: CreateItemViewModel = hiltViewModel()) {
                     Toast.makeText(context, "Imagen subida!", Toast.LENGTH_SHORT).show()
                 }
             }
+
         }
-    }
 
         if (message.isNotBlank()) {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             viewModel.clearMessage()
         }
+    }
 }
 
 @Composable
@@ -237,6 +239,7 @@ fun UploadImageItemComponent(onImageClick: () -> Unit) {
         )
     }
 }
+
 
 @Composable
 fun CategoriesDropdownComponent(onCategoryChange: (Category) -> Unit) {

@@ -135,6 +135,8 @@ class CreateItemViewModel @Inject constructor(
                     _isSaving.value = false
                 }
             }
+        } else {
+            _message.value = "Por favor, completa todos los campos"
         }
     }
 }

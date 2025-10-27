@@ -1,16 +1,11 @@
 package com.meyrforge.bagofholdingdmsvault.feature_home.presentation
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.forEach
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -22,16 +17,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.meyrforge.bagofholdingdmsvault.R
 import com.meyrforge.bagofholdingdmsvault.common.Category
-import com.meyrforge.bagofholdingdmsvault.common.Screen
 import com.meyrforge.bagofholdingdmsvault.feature_home.presentation.components.CategoryCard
-import com.meyrforge.bagofholdingdmsvault.ui.sharedComponents.ButtonItemComponent
 import kotlinx.coroutines.flow.collectLatest
 
 data class CategoryHome(
@@ -115,17 +106,6 @@ fun HomeScreen(
                 onClick = { }
             )
         }
-        item {
-            ButtonItemComponent(
-                text = "Cerrar Sesión",
-                onClick = {
-                    viewModel.signOutUser()
-                })
-        }
-        item {
-            ButtonItemComponent("Agregar objeto") { navController.navigate(Screen.AddItem.route) }
-        }
-
     }
 }
 fun getIconByCategory(category: Category): Int {
